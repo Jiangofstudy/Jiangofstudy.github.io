@@ -149,19 +149,19 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Hello" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-python监控mysql主从状态" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/11/23/Hello/">Hello</a>
+      <a class="article-title" href="/2017/11/23/python监控mysql主从状态/">python监控mysql主从集群状态</a>
     </h1>
   
 
         
-        <a href="/2017/11/23/Hello/" class="archive-article-date">
+        <a href="/2017/11/23/python监控mysql主从状态/" class="archive-article-date">
   	<time datetime="2017-11-23T09:44:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-11-23</time>
 </a>
         
@@ -169,7 +169,40 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>#!/usr/bin/env python</p>
+<h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding:utf-8 --"></a>-<em>- coding:utf-8 -</em>-</h1><p>import os<br>import sys<br>import os.path<br>import urllib<br>import urllib2<br>import MySQLdb<br>import logging<br>import smtplib<br>from email.mime.text import MIMEText<br>from email.utils import formataddr</p>
+<p>MysqlINformation = {‘host’:’localhost’, ‘port’:3306, ‘user’:’root’,’passwd’:’mysql’}</p>
+<p>‘’’<br>记录日志<br>‘’’</p>
+<p>logging.basicConfig(<br>    filename=’/var/log/MySQL_replication_monitor.log’,<br>    filemode=’a’,<br>    format=’%(asctime)s %(filename)s[line:%(lineno)d] %(funcName)s %(levelname)s %(message)s’,<br>    datefmt=’%a, %d %b %Y %H:%M:%S’,<br>    level=logging.INFO<br>)</p>
+<p>def monitor_MySQL_replication():</p>
+<pre><code>#用于监控MySQL主从复制状态，异常则告警
+
+status = True
+
+try:
+    conn = MySQLdb.connect(**MysqlINformation)
+    cursor = conn.cursor(cursorclass=MySQLdb.cursors.DictCursor)
+    cursor.execute(&apos;SHOW SLAVE STATUS;&apos;)
+    result = cursor.fetchone()
+    if result[&apos;Slave_IO_Running&apos;] == &quot;Yes&quot; and result[&apos;Slave_SQL_Running&apos;] == &quot;Yes&quot;:
+        logging.info(&apos;MySQL master/slave replication status is successfully&apos;)
+    else:
+        logging.error(&apos;MySQL Master/Slave replication fail,Please check it&apos;)
+        status = False
+except Exception as e:
+    logging.error(e)
+    status = False
+return status
+</code></pre><p>my_sender = ‘’  # 发件人邮箱账号<br>my_pass = ‘’  # 发件人邮箱密码<br>my_user = ‘’  # 收件人邮箱账号，<br>def SendMail():<br>    ret = True<br>    try:<br>        msg = MIMEText(‘Mysql主从复制异常，请检查’, ‘plain’, ‘utf-8’)<br>        msg[‘From’] = formataddr([“Alarm “, my_sender])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号<br>        msg[‘To’] = formataddr([“SCM”, my_user])  # 括号里的对应收件人邮箱昵称、收件人邮箱账号<br>        msg[‘Subject’] = ‘MySQL主从复制监控报警’  # 邮件的主题，也可以说是标题</p>
+<pre><code>    server = smtplib.SMTP(&quot;smtp.exmail.qq.com&quot;, 25)  # 发件人邮箱中的SMTP服务器，端口是25
+    server.login(my_sender, my_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
+    server.sendmail(my_sender, [my_user, ], msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
+    server.quit()  # 关闭连接
+except Exception:  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
+    ret = False
+return ret
+</code></pre><p>if <strong>name</strong> == “<strong>main</strong>“:<br>    if monitor_MySQL_replication() is False:<br>        ret = SendMail()<br>        if ret:<br>            print(“邮件发送成功”)<br>        else:<br>            print(“邮件发送失败”)</p>
+
       
 
       
@@ -181,7 +214,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/11/23/Hello/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/11/23/python监控mysql主从状态/">展开全文 >></a>
         </p>
       
 
