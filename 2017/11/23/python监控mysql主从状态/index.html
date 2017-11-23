@@ -13,11 +13,11 @@
 <meta property="og:title" content="python监控mysql主从集群状态">
 <meta property="og:url" content="https://jiangofstudy.github.io/2017/11/23/python监控mysql主从状态/index.html">
 <meta property="og:site_name" content="花果山二当家">
-<meta property="og:description" content="#!/usr/bin/env python -- coding:utf-8 --import osimport sysimport os.pathimport urllibimport urllib2import MySQLdbimport loggingimport smtplibfrom email.mime.text import MIMETextfrom email.utils impor">
-<meta property="og:updated_time" content="2017-11-23T09:57:21.232Z">
+<meta property="og:description" content="#!/usr/bin/env python -- coding:utf-8 --import osimport sysimport os.pathimport urllibimport urllib2import MySQLdbimport loggingimport smtplibfrom email.mime.text import MIMETextfrom email.utils impo">
+<meta property="og:updated_time" content="2017-11-23T10:10:38.682Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python监控mysql主从集群状态">
-<meta name="twitter:description" content="#!/usr/bin/env python -- coding:utf-8 --import osimport sysimport os.pathimport urllibimport urllib2import MySQLdbimport loggingimport smtplibfrom email.mime.text import MIMETextfrom email.utils impor">
+<meta name="twitter:description" content="#!/usr/bin/env python -- coding:utf-8 --import osimport sysimport os.pathimport urllibimport urllib2import MySQLdbimport loggingimport smtplibfrom email.mime.text import MIMETextfrom email.utils impo">
   
     <link rel="alternative" href="/atom.xml" title="花果山二当家" type="application/atom+xml">
   
@@ -171,7 +171,8 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#!/usr/bin/env python</p>
+        <hr>
+<p>#!/usr/bin/env python</p>
 <h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding:utf-8 --"></a>-<em>- coding:utf-8 -</em>-</h1><p>import os<br>import sys<br>import os.path<br>import urllib<br>import urllib2<br>import MySQLdb<br>import logging<br>import smtplib<br>from email.mime.text import MIMEText<br>from email.utils import formataddr</p>
 <p>MysqlINformation = {‘host’:’localhost’, ‘port’:3306, ‘user’:’root’,’passwd’:’mysql’}</p>
 <p>‘’’<br>记录日志<br>‘’’</p>
@@ -204,6 +205,7 @@ except Exception:  # 如果 try 中的语句没有执行，则会执行下面的
     ret = False
 return ret
 </code></pre><p>if <strong>name</strong> == “<strong>main</strong>“:<br>    if monitor_MySQL_replication() is False:<br>        ret = SendMail()<br>        if ret:<br>            print(“邮件发送成功”)<br>        else:<br>            print(“邮件发送失败”)</p>
+<hr>
 
       
 

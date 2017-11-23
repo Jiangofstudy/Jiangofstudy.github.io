@@ -169,7 +169,8 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#!/usr/bin/env python</p>
+        <hr>
+<p>#!/usr/bin/env python</p>
 <h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding:utf-8 --"></a>-<em>- coding:utf-8 -</em>-</h1><p>import os<br>import sys<br>import os.path<br>import urllib<br>import urllib2<br>import MySQLdb<br>import logging<br>import smtplib<br>from email.mime.text import MIMEText<br>from email.utils import formataddr</p>
 <p>MysqlINformation = {‘host’:’localhost’, ‘port’:3306, ‘user’:’root’,’passwd’:’mysql’}</p>
 <p>‘’’<br>记录日志<br>‘’’</p>
@@ -202,6 +203,7 @@ except Exception:  # 如果 try 中的语句没有执行，则会执行下面的
     ret = False
 return ret
 </code></pre><p>if <strong>name</strong> == “<strong>main</strong>“:<br>    if monitor_MySQL_replication() is False:<br>        ret = SendMail()<br>        if ret:<br>            print(“邮件发送成功”)<br>        else:<br>            print(“邮件发送失败”)</p>
+<hr>
 
       
 
